@@ -44,7 +44,7 @@ module "eks" {
       min_size      = 1
       max_size      = 3
       desired_size  = 2
-      instance_type = var.instance_types
+      instance_types = var.instance_types
     }
   }
   tags = {
@@ -54,13 +54,3 @@ module "eks" {
 }
 
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_name
-  depends_on = [
-    module.eks
-  ]
-}

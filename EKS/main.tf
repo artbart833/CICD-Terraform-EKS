@@ -1,3 +1,4 @@
+#vpc
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
@@ -7,8 +8,9 @@ module "vpc" {
   azs                  = data.aws_availability_zones.azs.names
   public_subnets       = var.public_subnets
   private_subnets      = var.private_subnets
+  
+  
   enable_dns_hostnames = true
-
   enable_nat_gateway = true
   single_nat_gateway = true
 
@@ -51,10 +53,14 @@ module "eks" {
   }
 }
 
+
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
+  name = module.eks.cluster_name
+  depends_on = [
+    module.eks
+  ]
 }

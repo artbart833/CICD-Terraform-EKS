@@ -6,7 +6,7 @@ module "vpc" {
 
   azs                  = data.aws_availability_zones.azs.names
   public_subnets       = var.public_subnets
-  private_subnets      = var.vpc.private_subnets
+  private_subnets      = var.private_subnets
   enable_dns_hostnames = true
 
   enable_nat_gateway = true
@@ -35,7 +35,7 @@ module "eks" {
   cluster_endpoint_public_access = true
   cluster_version                = "1.29"
   vpc_id                         = module.vpc.vpc_id
-  subnet_ids                     = var.private_subnets
+  subnet_ids                     = module.vpc.private_subnets
 
   eks_managed_node_groups = {
     nodes = {
